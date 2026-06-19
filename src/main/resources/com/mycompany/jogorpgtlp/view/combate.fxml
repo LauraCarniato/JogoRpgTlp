@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefWidth="800"
+            prefHeight="600"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.jogorpgtlp.controller.CombateController"
+            style="-fx-background-color: black;">
+
+    <children>
+
+        <!-- Fundo -->
+        <ImageView fx:id="mapaCombate"
+                   fitWidth="800"
+                   fitHeight="600"
+                   preserveRatio="false"
+                   visible="false" />
+
+        <!-- Jogador -->
+        <ImageView fx:id="playerCombate"
+                   fitWidth="140"
+                   fitHeight="140"
+                   preserveRatio="true"
+                   layoutX="330"
+                   layoutY="335"
+                   visible="false" />
+
+        <!-- Goblin pequeno -->
+        <ImageView fx:id="goblinCombate"
+                   fitWidth="140"
+                   fitHeight="140"
+                   preserveRatio="true"
+                   layoutX="330"
+                   layoutY="220"
+                   visible="false" />
+
+        <!-- Goblin grandão do diálogo -->
+        <ImageView fx:id="goblin"
+                   fitWidth="720"
+                   fitHeight="720"
+                   preserveRatio="true"
+                   AnchorPane.leftAnchor="40.0"
+                   AnchorPane.rightAnchor="40.0"
+                   AnchorPane.topAnchor="-40.0" />
+
+        <!-- Diálogo -->
+        <Label fx:id="dialogo"
+               text=""
+               layoutX="170"
+               layoutY="250"
+               prefWidth="460"
+               prefHeight="100"
+               alignment="CENTER"
+               wrapText="true"
+               style="-fx-text-fill: #4dff7a;
+                      -fx-font-size: 28px;
+                      -fx-font-weight: bold;
+                      -fx-effect: dropshadow(gaussian, #4dff7a, 8, 0.6, 0, 0);
+                      -fx-background-color: rgba(0,0,0,0.75);
+                      -fx-background-radius: 10;
+                      -fx-border-color: #2e8b57;
+                      -fx-border-radius: 10;
+                      -fx-padding: 15;" />
+
+        <!-- Prêmios -->
+        <Label fx:id="premiosLabel"
+               text=""
+               layoutX="170"
+               layoutY="355"
+               prefWidth="460"
+               prefHeight="120"
+               alignment="CENTER"
+               visible="false"
+               wrapText="true"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 22px;
+                      -fx-font-weight: bold;
+                      -fx-background-color: rgba(0,0,0,0.65);
+                      -fx-background-radius: 10;
+                      -fx-padding: 15;" />
+
+        <!-- Vida -->
+        <Label fx:id="vidaJogadorLabel"
+               text="Jogador: 30/30"
+               layoutX="45"
+               layoutY="525"
+               visible="false"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 22px;
+                      -fx-font-weight: bold;" />
+
+        <Label fx:id="vidaGoblinLabel"
+               text="Goblin: 25/25"
+               layoutX="580"
+               layoutY="25"
+               visible="false"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 22px;
+                      -fx-font-weight: bold;" />
+
+        <!-- Mensagens -->
+        <Label fx:id="mensagemCombate"
+               text=""
+               layoutX="575"
+               layoutY="260"
+               prefWidth="200"
+               prefHeight="80"
+               visible="false"
+               wrapText="true"
+               style="-fx-text-fill: white;
+                      -fx-font-size: 18px;
+                      -fx-font-weight: bold;
+                      -fx-background-color: rgba(0,0,0,0.55);
+                      -fx-background-radius: 8;
+                      -fx-padding: 10;" />
+
+        <!-- Cartas do Goblin -->
+        <Rectangle fx:id="cartaGoblin1"
+                   layoutX="230"
+                   layoutY="55"
+                   width="50"
+                   height="70"
+                   fill="#202020"
+                   stroke="#777777"
+                   visible="false" />
+
+        <Rectangle fx:id="cartaGoblin2"
+                   layoutX="290"
+                   layoutY="55"
+                   width="50"
+                   height="70"
+                   fill="#202020"
+                   stroke="#777777"
+                   visible="false" />
+
+        <Rectangle fx:id="cartaGoblin3"
+                   layoutX="350"
+                   layoutY="55"
+                   width="50"
+                   height="70"
+                   fill="#202020"
+                   stroke="#777777"
+                   visible="false" />
+
+        <Rectangle fx:id="cartaGoblin4"
+                   layoutX="410"
+                   layoutY="55"
+                   width="50"
+                   height="70"
+                   fill="#202020"
+                   stroke="#777777"
+                   visible="false" />
+
+        <Rectangle fx:id="cartaGoblin5"
+                   layoutX="470"
+                   layoutY="55"
+                   width="50"
+                   height="70"
+                   fill="#202020"
+                   stroke="#777777"
+                   visible="false" />
+
+        <!-- Cartas do Jogador -->
+        <Rectangle fx:id="cartaEspada"
+                   layoutX="200"
+                   layoutY="500"
+                   width="55"
+                   height="75"
+                   fill="#b22222"
+                   stroke="white"
+                   visible="false"
+                   onMouseClicked="#usarEspada" />
+
+        <Rectangle fx:id="cartaCura"
+                   layoutX="270"
+                   layoutY="500"
+                   width="55"
+                   height="75"
+                   fill="#228b22"
+                   stroke="white"
+                   visible="false"
+                   onMouseClicked="#usarCura" />
+
+        <Rectangle fx:id="cartaEscudo"
+                   layoutX="340"
+                   layoutY="500"
+                   width="55"
+                   height="75"
+                   fill="#1e90ff"
+                   stroke="white"
+                   visible="false"
+                   onMouseClicked="#usarEscudo" />
+
+        <Rectangle fx:id="cartaDano"
+                   layoutX="410"
+                   layoutY="500"
+                   width="55"
+                   height="75"
+                   fill="#8a2be2"
+                   stroke="white"
+                   visible="false"
+                   onMouseClicked="#usarDano" />
+
+        <Rectangle fx:id="cartaCongelamento"
+                   layoutX="480"
+                   layoutY="500"
+                   width="55"
+                   height="75"
+                   fill="#f0e68c"
+                   stroke="white"
+                   visible="false"
+                   onMouseClicked="#usarCongelamento" />
+
+    </children>
+
+</AnchorPane>

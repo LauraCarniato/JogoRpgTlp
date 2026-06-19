@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane fx:id="paneJogo"
+            prefWidth="800"
+            prefHeight="600"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.jogorpgtlp.controller.GameController"
+            style="-fx-background-color: #000000;">
+
+    <children>
+
+        <ImageView fx:id="mapaFundo"
+                   fitWidth="680"
+                   fitHeight="480"
+                   preserveRatio="false"
+                   layoutX="0"
+                   layoutY="0" />
+
+        <Rectangle fx:id="paredeCima" layoutX="0" layoutY="0" width="680" height="45" fill="green" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeBaixo" layoutX="0" layoutY="395" width="680" height="40" fill="green" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeEsquerda" layoutX="65" layoutY="0" width="35" height="480" fill="green" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeDireita" layoutX="580" layoutY="0" width="35" height="480" fill="green" opacity="0" mouseTransparent="true" />
+
+        <Rectangle fx:id="pedra1" layoutX="200" layoutY="150" width="65" height="40" fill="red" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra2" layoutX="295" layoutY="213" width="55" height="35" fill="red" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra3" layoutX="475" layoutY="340" width="30" height="25" fill="red" opacity="0" mouseTransparent="true" />
+
+        <Rectangle fx:id="bau1" layoutX="133" layoutY="100" width="37" height="33" fill="blue" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="bau2" layoutX="435" layoutY="275" width="40" height="30" fill="blue" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="passagemPorta" layoutX="325" layoutY="40" width="35" height="15" fill="blue" opacity="0.3" mouseTransparent="true" />
+
+        <ImageView fx:id="player"
+                   fitWidth="80"
+                   fitHeight="80"
+                   preserveRatio="true"
+                   layoutX="360"
+                   layoutY="260" />
+
+        <Label fx:id="mensagemAcao"
+               text="TAB — Abrir"
+               visible="false"
+               style="-fx-text-fill: #f0e68c;
+                      -fx-font-size: 14px;
+                      -fx-font-weight: bold;
+                      -fx-effect: dropshadow(gaussian, #f0e68c, 8, 0.7, 0, 0);
+                      -fx-background-color: rgba(0,0,0,0.45);
+                      -fx-background-radius: 6;
+                      -fx-padding: 4 8 4 8;
+                      -fx-border-color: #a88a2a;
+                      -fx-border-radius: 6;" />
+
+        <AnchorPane fx:id="menuEvolucao"
+                    layoutX="180"
+                    layoutY="60"
+                    prefWidth="440"
+                    prefHeight="420"
+                    visible="false"
+                    style="-fx-background-color: rgba(0,0,0,0.85);
+                           -fx-background-radius: 15;
+                           -fx-border-color: white;
+                           -fx-border-radius: 15;">
+
+            <children>
+
+                <Label text="Evolução"
+                       layoutX="160"
+                       layoutY="20"
+                       style="-fx-text-fill: white;
+                              -fx-font-size: 28px;
+                              -fx-font-weight: bold;" />
+
+                <Label fx:id="labelPontos"
+                       text="Pontos: 0"
+                       layoutX="160"
+                       layoutY="65"
+                       style="-fx-text-fill: gold;
+                              -fx-font-size: 20px;
+                              -fx-font-weight: bold;" />
+
+                <Button fx:id="btnVida"
+                        layoutX="80"
+                        layoutY="120"
+                        prefWidth="280"
+                        text="Vida 0/10"
+                        onAction="#uparVida" />
+
+                <Button fx:id="btnEspada"
+                        layoutX="80"
+                        layoutY="165"
+                        prefWidth="280"
+                        text="Espada 0/10"
+                        onAction="#uparEspada" />
+
+                <Button fx:id="btnCura"
+                        layoutX="80"
+                        layoutY="210"
+                        prefWidth="280"
+                        text="Cura 0/10"
+                        onAction="#uparCura" />
+
+                <Button fx:id="btnEscudo"
+                        layoutX="80"
+                        layoutY="255"
+                        prefWidth="280"
+                        text="Escudo 0/10"
+                        onAction="#uparEscudo" />
+
+                <Button fx:id="btnDano"
+                        layoutX="80"
+                        layoutY="300"
+                        prefWidth="280"
+                        text="Dano 0/10"
+                        onAction="#uparDano" />
+
+                <Button fx:id="btnCongelamento"
+                        layoutX="80"
+                        layoutY="345"
+                        prefWidth="280"
+                        text="Congelamento 0/10"
+                        onAction="#uparCongelamento" />
+
+            </children>
+
+        </AnchorPane>
+
+    </children>
+
+</AnchorPane>
