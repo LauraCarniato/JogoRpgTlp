@@ -34,11 +34,11 @@ public class CombateController {
     @FXML private Rectangle cartaGoblin4;
     @FXML private Rectangle cartaGoblin5;
 
-    @FXML private Rectangle cartaEspada;
-    @FXML private Rectangle cartaCura;
-    @FXML private Rectangle cartaEscudo;
-    @FXML private Rectangle cartaDano;
-    @FXML private Rectangle cartaCongelamento;
+    @FXML private ImageView cartaEspada;
+    @FXML private ImageView cartaCura;
+    @FXML private ImageView cartaEscudo;
+    @FXML private ImageView cartaFogo;
+    @FXML private ImageView cartaCongelamento;
 
     private Image goblinFechado;
     private Image goblinAberto;
@@ -132,16 +132,18 @@ public class CombateController {
     }
 
     private void mostrarCartas() {
-        cartaGoblin1.setVisible(true);
-        cartaGoblin2.setVisible(true);
-        cartaGoblin3.setVisible(true);
-        cartaGoblin4.setVisible(true);
-        cartaGoblin5.setVisible(true);
+
+        cartaEspada.setImage(carregarImagem("cartaEspada.png"));
+        cartaCura.setImage(carregarImagem("cartaCura.png"));
+        cartaEscudo.setImage(carregarImagem("cartaEscudo.png"));
+        cartaFogo.setImage(carregarImagem("cartaFogo.png"));
+        cartaCongelamento.setImage(carregarImagem("cartaCongelamento.png"));
+
 
         cartaEspada.setVisible(true);
         cartaCura.setVisible(true);
         cartaEscudo.setVisible(true);
-        cartaDano.setVisible(true);
+        cartaFogo.setVisible(true);
         cartaCongelamento.setVisible(true);
     }
 
@@ -155,7 +157,7 @@ public class CombateController {
         cartaEspada.setVisible(false);
         cartaCura.setVisible(false);
         cartaEscudo.setVisible(false);
-        cartaDano.setVisible(false);
+        cartaFogo.setVisible(false);
         cartaCongelamento.setVisible(false);
     }
 
@@ -172,7 +174,7 @@ public class CombateController {
         cartaEspada.setDisable(bloquear);
         cartaCura.setDisable(bloquear);
         cartaEscudo.setDisable(bloquear);
-        cartaDano.setDisable(bloquear);
+        cartaFogo.setDisable(bloquear);
         cartaCongelamento.setDisable(bloquear);
     }
 
@@ -246,8 +248,9 @@ public class CombateController {
     }
 
     @FXML
-    private void usarDano() {
-        mostrarMensagem("Você usou Poção de Dano!");
+    private void usarFogo()
+    {
+        mostrarMensagem("Você usou Bola de Fogo!");
 
         int dano = 8;
 
@@ -256,6 +259,7 @@ public class CombateController {
         }
 
         causarDanoNoGoblin(dano);
+
         esperarTurnoGoblin();
     }
 

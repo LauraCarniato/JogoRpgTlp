@@ -166,55 +166,54 @@
                    visible="false" />
 
         <!-- Cartas do Jogador -->
-        <Rectangle fx:id="cartaEspada"
-                   layoutX="200"
-                   layoutY="500"
-                   width="55"
-                   height="75"
-                   fill="#b22222"
-                   stroke="white"
-                   visible="false"
-                   onMouseClicked="#usarEspada" />
+        <ImageView fx:id="cartaEspada"
+           fitWidth="280"
+           fitHeight="320"
+           layoutX="120"
+           layoutY="430"
+           preserveRatio="true"
+           visible="false"
+           onMouseClicked="#usarEspada"/>
 
-        <Rectangle fx:id="cartaCura"
-                   layoutX="270"
-                   layoutY="500"
-                   width="55"
-                   height="75"
-                   fill="#228b22"
-                   stroke="white"
-                   visible="false"
-                   onMouseClicked="#usarCura" />
 
-        <Rectangle fx:id="cartaEscudo"
-                   layoutX="340"
-                   layoutY="500"
-                   width="55"
-                   height="75"
-                   fill="#1e90ff"
-                   stroke="white"
-                   visible="false"
-                   onMouseClicked="#usarEscudo" />
+    <ImageView fx:id="cartaCura"
+               fitWidth="280"
+               fitHeight="320"
+               layoutX="220"
+               layoutY="430"
+               preserveRatio="true"
+               visible="false"
+               onMouseClicked="#usarCura"/>
 
-        <Rectangle fx:id="cartaDano"
-                   layoutX="410"
-                   layoutY="500"
-                   width="55"
-                   height="75"
-                   fill="#8a2be2"
-                   stroke="white"
-                   visible="false"
-                   onMouseClicked="#usarDano" />
 
-        <Rectangle fx:id="cartaCongelamento"
-                   layoutX="480"
-                   layoutY="500"
-                   width="55"
-                   height="75"
-                   fill="#f0e68c"
-                   stroke="white"
-                   visible="false"
-                   onMouseClicked="#usarCongelamento" />
+    <ImageView fx:id="cartaEscudo"
+               fitWidth="280"
+               fitHeight="320"
+               layoutX="320"
+               layoutY="430"
+               preserveRatio="true"
+               visible="false"
+               onMouseClicked="#usarEscudo"/>
+
+
+    <ImageView fx:id="cartaFogo"
+               fitWidth="280"
+               fitHeight="320"
+               layoutX="420"
+               layoutY="430"
+               preserveRatio="true"
+               visible="false"
+               onMouseClicked="#usarFogo"/>
+
+
+    <ImageView fx:id="cartaCongelamento"
+               fitWidth="280"
+               fitHeight="320"
+               layoutX="520"
+               layoutY="430"
+               preserveRatio="true"
+               visible="false"
+               onMouseClicked="#usarCongelamento"/>
 
     </children>
 
