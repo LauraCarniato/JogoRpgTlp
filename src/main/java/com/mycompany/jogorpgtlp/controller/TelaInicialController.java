@@ -45,11 +45,35 @@ public class TelaInicialController {
         alert.setHeaderText("O Filho Perdido");
 
         alert.setContentText(
-                "Desenvolvido por:\n\n"
-                + "Laura Carniato Salvatino\n\n"
-                + "Instituto Federal de Mato Grosso do Sul\n"
-                + "Curso Técnico em Informática\n\n"
-                + "2026"
+                "Apresentação\n\n"
+                + "Jogo desenvolvido por \n" +
+"Laura Carniato & Melissa Gauna\n" +
+"\n" +
+"\n" +
+"Game Design\n" +
+"Laura Carniato & Melissa Gauna\n" +
+"\n" +
+"\n" +
+"Roteiro\n" +
+"Laura Carniato & Melissa Gauna\n" +
+"\n" +
+"\n" +
+"Ferramentas Utilizadas\n" +
+"Ferramentas de IA (ChatGpt)\n" +
+"Piskel\n" +
+"\n" +
+"\n" +
+"Aviso sobre IA\n" +
+"Este jogo utilizou ferramentas de IA (ChatGpt) como auxílio durante o processo de desenvolvimento e recursos visuais. Todo conteúdo foi revisado e integrado pelos desenvolvedores. \n" +
+"\n" +
+"\n" +
+"Agradecimentos\n" +
+"A todos que apoiaram este projeto e dedicaram seu tempo para explorá-lo.\n" +
+"\n" +
+"\n" +
+"Copyright\n" +
+"© 2026 Laura Carniato & Melissa Gauna. Todos os direitos reservados.\n\n"
+                
         );
 
         alert.showAndWait();
