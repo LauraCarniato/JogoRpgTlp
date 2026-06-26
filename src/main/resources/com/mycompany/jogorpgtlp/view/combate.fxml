@@ -49,40 +49,42 @@
                    AnchorPane.topAnchor="-40.0" />
 
         <!-- Diálogo -->
-        <Label fx:id="dialogo"
-               text=""
-               layoutX="170"
-               layoutY="250"
-               prefWidth="460"
-               prefHeight="100"
-               alignment="CENTER"
-               wrapText="true"
-               style="-fx-text-fill: #4dff7a;
-                      -fx-font-size: 28px;
-                      -fx-font-weight: bold;
-                      -fx-effect: dropshadow(gaussian, #4dff7a, 8, 0.6, 0, 0);
-                      -fx-background-color: rgba(0,0,0,0.75);
-                      -fx-background-radius: 10;
-                      -fx-border-color: #2e8b57;
-                      -fx-border-radius: 10;
-                      -fx-padding: 15;" />
+        <!-- Caixa de diálogo -->
+
+            <Label fx:id="dialogo"
+                   text=""
+                   layoutX="35"
+                   layoutY="470"
+                   prefWidth="730"
+                   prefHeight="95"
+                   alignment="CENTER_LEFT"
+                   wrapText="true"
+                   style="-fx-text-fill: white;
+                          -fx-font-size: 24px;
+                          -fx-font-weight: bold;
+                          -fx-background-color: rgba(0,0,0,0.85);
+                          -fx-background-radius: 10;
+                          -fx-border-color: white;
+                          -fx-border-width: 2;
+                          -fx-border-radius: 10;
+                          -fx-padding: 15;" />
 
         <!-- Prêmios -->
         <Label fx:id="premiosLabel"
-               text=""
-               layoutX="170"
-               layoutY="355"
-               prefWidth="460"
-               prefHeight="120"
-               alignment="CENTER"
-               visible="false"
-               wrapText="true"
-               style="-fx-text-fill: white;
-                      -fx-font-size: 22px;
-                      -fx-font-weight: bold;
-                      -fx-background-color: rgba(0,0,0,0.65);
-                      -fx-background-radius: 10;
-                      -fx-padding: 15;" />
+       text=""
+       layoutX="90"
+       layoutY="350"
+       prefWidth="560"
+       prefHeight="160"
+       alignment="CENTER"
+       visible="false"
+       wrapText="true"
+       style="-fx-text-fill: white;
+              -fx-font-size: 20px;
+              -fx-font-weight: bold;
+              -fx-background-color: rgba(0,0,0,0.65);
+              -fx-background-radius: 10;
+              -fx-padding: 15;" />
 
         <!-- Vida -->
         <Label fx:id="vidaJogadorLabel"
@@ -120,50 +122,11 @@
                       -fx-padding: 10;" />
 
         <!-- Cartas do Goblin -->
-        <Rectangle fx:id="cartaGoblin1"
-                   layoutX="230"
-                   layoutY="55"
-                   width="50"
-                   height="70"
-                   fill="#202020"
-                   stroke="#777777"
-                   visible="false" />
-
-        <Rectangle fx:id="cartaGoblin2"
-                   layoutX="290"
-                   layoutY="55"
-                   width="50"
-                   height="70"
-                   fill="#202020"
-                   stroke="#777777"
-                   visible="false" />
-
-        <Rectangle fx:id="cartaGoblin3"
-                   layoutX="350"
-                   layoutY="55"
-                   width="50"
-                   height="70"
-                   fill="#202020"
-                   stroke="#777777"
-                   visible="false" />
-
-        <Rectangle fx:id="cartaGoblin4"
-                   layoutX="410"
-                   layoutY="55"
-                   width="50"
-                   height="70"
-                   fill="#202020"
-                   stroke="#777777"
-                   visible="false" />
-
-        <Rectangle fx:id="cartaGoblin5"
-                   layoutX="470"
-                   layoutY="55"
-                   width="50"
-                   height="70"
-                   fill="#202020"
-                   stroke="#777777"
-                   visible="false" />
+        <ImageView fx:id="cartaGoblin1" fitWidth="280" fitHeight="320" layoutX="20" layoutY="55" preserveRatio="true" visible="false" />
+        <ImageView fx:id="cartaGoblin2" fitWidth="280" fitHeight="320" layoutX="120" layoutY="55" preserveRatio="true" visible="false" />
+        <ImageView fx:id="cartaGoblin3" fitWidth="280" fitHeight="320" layoutX="220" layoutY="55" preserveRatio="true" visible="false" />
+        <ImageView fx:id="cartaGoblin4" fitWidth="280" fitHeight="320" layoutX="320" layoutY="55" preserveRatio="true" visible="false" />
+        <ImageView fx:id="cartaGoblin5" fitWidth="280" fitHeight="320" layoutX="420" layoutY="55" preserveRatio="true" visible="false" />
 
         <!-- Cartas do Jogador -->
         <ImageView fx:id="cartaEspada"

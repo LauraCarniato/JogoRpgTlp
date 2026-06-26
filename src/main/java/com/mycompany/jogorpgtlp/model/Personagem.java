@@ -2,6 +2,7 @@ package com.mycompany.jogorpgtlp.model;
 
 public class Personagem {
 
+    private int id;
     private String nome;
     private String classe;
     private int nivel;
@@ -17,13 +18,12 @@ public class Personagem {
     private int congelamento;
 
     public Personagem(String nome, String classe, String aparencia) {
+        this.id = 0;
         this.nome = nome;
         this.classe = classe;
         this.aparencia = aparencia;
         this.nivel = 0;
-
         this.pontosDisponiveis = 0;
-
         this.vida = 0;
         this.espada = 0;
         this.cura = 0;
@@ -32,28 +32,35 @@ public class Personagem {
         this.congelamento = 0;
     }
 
-    public String getNome() {
-        return nome;
-    }
+    public int getId() { return id; }
+    public String getNome() { return nome; }
+    public String getClasse() { return classe; }
+    public int getNivel() { return nivel; }
+    public String getAparencia() { return aparencia; }
 
-    public String getClasse() {
-        return classe;
-    }
+    public int getPontosDisponiveis() { return pontosDisponiveis; }
+    public int getVida() { return vida; }
+    public int getEspada() { return espada; }
+    public int getCura() { return cura; }
+    public int getEscudo() { return escudo; }
+    public int getDano() { return dano; }
+    public int getCongelamento() { return congelamento; }
 
-    public int getNivel() {
-        return nivel;
-    }
-
-    public String getAparencia() {
-        return aparencia;
-    }
+    public void setId(int id) { this.id = id; }
+    public void setNome(String nome) { this.nome = nome; }
+    public void setClasse(String classe) { this.classe = classe; }
+    public void setNivel(int nivel) { this.nivel = nivel; }
+    public void setAparencia(String aparencia) { this.aparencia = aparencia; }
+    public void setPontosDisponiveis(int pontosDisponiveis) { this.pontosDisponiveis = pontosDisponiveis; }
+    public void setVida(int vida) { this.vida = vida; }
+    public void setEspada(int espada) { this.espada = espada; }
+    public void setCura(int cura) { this.cura = cura; }
+    public void setEscudo(int escudo) { this.escudo = escudo; }
+    public void setDano(int dano) { this.dano = dano; }
+    public void setCongelamento(int congelamento) { this.congelamento = congelamento; }
 
     public void subirNivel() {
         nivel++;
-    }
-
-    public int getPontosDisponiveis() {
-        return pontosDisponiveis;
     }
 
     public void ganharPontoEvolucao() {
@@ -61,52 +68,18 @@ public class Personagem {
     }
 
     public boolean gastarPonto(String atributo) {
-        if (pontosDisponiveis <= 0) {
-            return false;
-        }
+        if (pontosDisponiveis <= 0) return false;
 
-        if (atributo.equals("vida") && vida < 10) {
-            vida++;
-        } else if (atributo.equals("espada") && espada < 10) {
-            espada++;
-        } else if (atributo.equals("cura") && cura < 10) {
-            cura++;
-        } else if (atributo.equals("escudo") && escudo < 10) {
-            escudo++;
-        } else if (atributo.equals("dano") && dano < 10) {
-            dano++;
-        } else if (atributo.equals("congelamento") && congelamento < 10) {
-            congelamento++;
-        } else {
-            return false;
-        }
+        if (atributo.equals("vida") && vida < 10) vida++;
+        else if (atributo.equals("espada") && espada < 10) espada++;
+        else if (atributo.equals("cura") && cura < 10) cura++;
+        else if (atributo.equals("escudo") && escudo < 10) escudo++;
+        else if (atributo.equals("dano") && dano < 10) dano++;
+        else if (atributo.equals("congelamento") && congelamento < 10) congelamento++;
+        else return false;
 
         pontosDisponiveis--;
         return true;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public int getEspada() {
-        return espada;
-    }
-
-    public int getCura() {
-        return cura;
-    }
-
-    public int getEscudo() {
-        return escudo;
-    }
-
-    public int getDano() {
-        return dano;
-    }
-
-    public int getCongelamento() {
-        return congelamento;
     }
 
     public int getVidaMaxima() {
@@ -118,7 +91,7 @@ public class Personagem {
     }
 
     public int getValorCura() {
-        return 5 + cura;
+        return 5 + (cura * 2);
     }
 
     public int getValorEscudo() {
@@ -126,18 +99,15 @@ public class Personagem {
     }
 
     public int getDanoPocao() {
-        return 8 + dano;
+        return 8 + (dano * 2);
     }
 
     public int getTurnosCongelamento() {
-        if (congelamento >= 10) {
-            return 3;
-        }
+        return 1 + (congelamento / 3);
+    }
 
-        if (congelamento >= 5) {
-            return 2;
-        }
-
-        return 1;
+    @Override
+    public String toString() {
+        return nome + " - " + classe;
     }
 }

@@ -1,17 +1,19 @@
 package com.mycompany.jogorpgtlp.controller;
 
+import com.mycompany.jogorpgtlp.App;
+import com.mycompany.jogorpgtlp.model.Combate;
 import com.mycompany.jogorpgtlp.model.Personagem;
 import com.mycompany.jogorpgtlp.model.SessaoJogo;
-import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
 public class CombateController {
@@ -28,11 +30,11 @@ public class CombateController {
     @FXML private Label mensagemCombate;
     @FXML private Label premiosLabel;
 
-    @FXML private Rectangle cartaGoblin1;
-    @FXML private Rectangle cartaGoblin2;
-    @FXML private Rectangle cartaGoblin3;
-    @FXML private Rectangle cartaGoblin4;
-    @FXML private Rectangle cartaGoblin5;
+    @FXML private ImageView cartaGoblin1;
+    @FXML private ImageView cartaGoblin2;
+    @FXML private ImageView cartaGoblin3;
+    @FXML private ImageView cartaGoblin4;
+    @FXML private ImageView cartaGoblin5;
 
     @FXML private ImageView cartaEspada;
     @FXML private ImageView cartaCura;
@@ -40,48 +42,63 @@ public class CombateController {
     @FXML private ImageView cartaFogo;
     @FXML private ImageView cartaCongelamento;
 
-    private Image goblinFechado;
-    private Image goblinAberto;
+    private Image inimigoFechado;
+    private Image inimigoAberto;
+
+    private String nomeInimigo;
+    private String imagemFechada;
+    private String imagemAberta;
+    private String falaInimigo;
+    private String proximoMapa;
 
     private boolean trocar = false;
+    private boolean esperandoY = false;
 
     private Personagem personagemAtual;
-
-    private int vidaMaximaJogador;
-    private int vidaJogador;
-    private int vidaGoblin = 25;
-
-    private int escudoJogador = 0;
-    private int escudoGoblin = 0;
-
-    private int turnosGoblinCongelado = 0;
-    private int venenoJogador = 0;
-
-    private boolean recompensaEntregue = false;
-
-    private Random random = new Random();
+    private Combate combate;
 
     @FXML
     private void initialize() {
         personagemAtual = SessaoJogo.getPersonagemAtual();
+        combate = new Combate(personagemAtual, SessaoJogo.getInimigoAtual());
 
-        if (personagemAtual != null) {
-            vidaMaximaJogador = personagemAtual.getVidaMaxima();
-        } else {
-            vidaMaximaJogador = 30;
-        }
+        configurarInimigo();
 
-        vidaJogador = vidaMaximaJogador;
+        inimigoFechado = carregarImagem(imagemFechada);
+        inimigoAberto = carregarImagem(imagemAberta);
 
-        goblinFechado = carregarImagem("goblinFechado.png");
-        goblinAberto = carregarImagem("goblinAberto.png");
-
-        goblin.setImage(goblinFechado);
-        dialogo.setText("Goblin: Você entrou na minha mina...");
+        goblin.setImage(inimigoFechado);
+        dialogo.setText(falaInimigo);
 
         atualizarVidas();
 
         Platform.runLater(() -> iniciarFala());
+    }
+
+    private void configurarInimigo() {
+        String inimigo = SessaoJogo.getInimigoAtual();
+
+        if (inimigo.equals("esqueleto")) {
+            nomeInimigo = "Esqueleto";
+            imagemFechada = "esqueletoFechado.png";
+            imagemAberta = "esqueletoAberto.png";
+            falaInimigo = "Esqueleto: Você é realmente forte...";
+            proximoMapa = "nivel2_sala2.png";
+
+        } else if (inimigo.equals("boss")) {
+            nomeInimigo = "Boss";
+            imagemFechada = "bossFechado.png";
+            imagemAberta = "bossAberto.png";
+            falaInimigo = "Boss: Você chegou longe demais...";
+            proximoMapa = "nivel3_sala2.png";
+
+        } else {
+            nomeInimigo = "Goblin";
+            imagemFechada = "goblinFechado.png";
+            imagemAberta = "goblinAberto.png";
+            falaInimigo = "Goblin: Você entrou na minha mina...";
+            proximoMapa = "nivel1_sala2.png";
+        }
     }
 
     private void iniciarFala() {
@@ -90,9 +107,9 @@ public class CombateController {
                         Duration.millis(277.5),
                         event -> {
                             if (trocar) {
-                                goblin.setImage(goblinFechado);
+                                goblin.setImage(inimigoFechado);
                             } else {
-                                goblin.setImage(goblinAberto);
+                                goblin.setImage(inimigoAberto);
                             }
 
                             trocar = !trocar;
@@ -109,14 +126,14 @@ public class CombateController {
         goblin.setVisible(false);
         dialogo.setVisible(false);
 
-        mapaCombate.setImage(carregarImagem("nivel1_sala2.png"));
+        mapaCombate.setImage(carregarImagem(proximoMapa));
 
         if (personagemAtual != null) {
             String aparencia = personagemAtual.getAparencia();
             playerCombate.setImage(carregarImagem(aparencia + "Costas.png"));
         }
 
-        goblinCombate.setImage(carregarImagem("goblinFechado.png"));
+        goblinCombate.setImage(carregarImagem(imagemFechada));
 
         playerCombate.setFitWidth(goblinCombate.getFitWidth());
         playerCombate.setFitHeight(goblinCombate.getFitHeight());
@@ -129,9 +146,17 @@ public class CombateController {
         vidaGoblinLabel.setVisible(true);
 
         mostrarCartas();
+        configurarTeclaY();
     }
 
     private void mostrarCartas() {
+        Image versoGoblin = carregarImagem("cartaCosta.png");
+
+        cartaGoblin1.setImage(versoGoblin);
+        cartaGoblin2.setImage(versoGoblin);
+        cartaGoblin3.setImage(versoGoblin);
+        cartaGoblin4.setImage(versoGoblin);
+        cartaGoblin5.setImage(versoGoblin);
 
         cartaEspada.setImage(carregarImagem("cartaEspada.png"));
         cartaCura.setImage(carregarImagem("cartaCura.png"));
@@ -139,6 +164,11 @@ public class CombateController {
         cartaFogo.setImage(carregarImagem("cartaFogo.png"));
         cartaCongelamento.setImage(carregarImagem("cartaCongelamento.png"));
 
+        cartaGoblin1.setVisible(true);
+        cartaGoblin2.setVisible(true);
+        cartaGoblin3.setVisible(true);
+        cartaGoblin4.setVisible(true);
+        cartaGoblin5.setVisible(true);
 
         cartaEspada.setVisible(true);
         cartaCura.setVisible(true);
@@ -161,6 +191,23 @@ public class CombateController {
         cartaCongelamento.setVisible(false);
     }
 
+    private void atualizarVidas() {
+        vidaJogadorLabel.setText(
+                "Jogador: "
+                + combate.getVidaJogador()
+                + "/"
+                + combate.getVidaMaximaJogador()
+        );
+
+        vidaGoblinLabel.setText(
+                nomeInimigo
+                + ": "
+                + combate.getVidaGoblin()
+                + "/"
+                + combate.getVidaMaximaGoblin()
+        );
+    }
+
     private void mostrarMensagem(String texto) {
         mensagemCombate.setText(texto);
         mensagemCombate.setVisible(true);
@@ -178,22 +225,27 @@ public class CombateController {
         cartaCongelamento.setDisable(bloquear);
     }
 
-    private void esperarTurnoGoblin() {
+    private void esperarTurnoInimigo() {
         bloquearCartas(true);
 
         PauseTransition pausa = new PauseTransition(Duration.seconds(2));
 
         pausa.setOnFinished(event -> {
-            turnoGoblin();
+            combate.turnoGoblin();
 
-            PauseTransition pausaDepoisGoblin = new PauseTransition(Duration.seconds(2));
-            pausaDepoisGoblin.setOnFinished(e -> {
-                if (vidaJogador > 0 && vidaGoblin > 0) {
+            atualizarVidas();
+            mostrarMensagem(combate.getUltimaMensagem());
+            verificarFim();
+
+            PauseTransition pausaDepois = new PauseTransition(Duration.seconds(2));
+
+            pausaDepois.setOnFinished(e -> {
+                if (!combate.acabou()) {
                     bloquearCartas(false);
                 }
             });
 
-            pausaDepoisGoblin.play();
+            pausaDepois.play();
         });
 
         pausa.play();
@@ -201,194 +253,71 @@ public class CombateController {
 
     @FXML
     private void usarEspada() {
-        mostrarMensagem("Você usou Espada!");
+        combate.usarEspada();
 
-        int dano = 5;
+        atualizarVidas();
+        mostrarMensagem(combate.getUltimaMensagem());
+        verificarFim();
 
-        if (personagemAtual != null) {
-            dano = personagemAtual.getDanoEspada();
+        if (!combate.acabou()) {
+            esperarTurnoInimigo();
         }
-
-        causarDanoNoGoblin(dano);
-        esperarTurnoGoblin();
     }
 
     @FXML
     private void usarCura() {
-        mostrarMensagem("Você usou Cura!");
-
-        int cura = 5;
-
-        if (personagemAtual != null) {
-            cura = personagemAtual.getValorCura();
-        }
-
-        vidaJogador += cura;
-
-        if (vidaJogador > vidaMaximaJogador) {
-            vidaJogador = vidaMaximaJogador;
-        }
+        combate.usarCura();
 
         atualizarVidas();
+        mostrarMensagem(combate.getUltimaMensagem());
         verificarFim();
-        esperarTurnoGoblin();
+
+        if (!combate.acabou()) {
+            esperarTurnoInimigo();
+        }
     }
 
     @FXML
     private void usarEscudo() {
-        mostrarMensagem("Você usou Escudo!");
+        combate.usarEscudo();
 
-        if (personagemAtual != null) {
-            escudoJogador = personagemAtual.getValorEscudo();
-        } else {
-            escudoJogador = 3;
+        atualizarVidas();
+        mostrarMensagem(combate.getUltimaMensagem());
+        verificarFim();
+
+        if (!combate.acabou()) {
+            esperarTurnoInimigo();
         }
-
-        esperarTurnoGoblin();
     }
 
     @FXML
-    private void usarFogo()
-    {
-        mostrarMensagem("Você usou Bola de Fogo!");
+    private void usarFogo() {
+        combate.usarFogo();
 
-        int dano = 8;
+        atualizarVidas();
+        mostrarMensagem(combate.getUltimaMensagem());
+        verificarFim();
 
-        if (personagemAtual != null) {
-            dano = personagemAtual.getDanoPocao();
+        if (!combate.acabou()) {
+            esperarTurnoInimigo();
         }
-
-        causarDanoNoGoblin(dano);
-
-        esperarTurnoGoblin();
     }
 
     @FXML
     private void usarCongelamento() {
-        mostrarMensagem("Você usou Congelamento!");
-
-        if (personagemAtual != null) {
-            turnosGoblinCongelado = personagemAtual.getTurnosCongelamento();
-        } else {
-            turnosGoblinCongelado = 1;
-        }
-
-        esperarTurnoGoblin();
-    }
-
-    private void causarDanoNoGoblin(int dano) {
-        if (escudoGoblin > 0) {
-            dano -= escudoGoblin;
-            escudoGoblin = 0;
-
-            if (dano < 0) {
-                dano = 0;
-            }
-        }
-
-        vidaGoblin -= dano;
-
-        if (vidaGoblin < 0) {
-            vidaGoblin = 0;
-        }
+        combate.usarCongelamento();
 
         atualizarVidas();
+        mostrarMensagem(combate.getUltimaMensagem());
         verificarFim();
-    }
 
-    private void causarDanoNoJogador(int dano) {
-        if (escudoJogador > 0) {
-            dano -= escudoJogador;
-            escudoJogador = 0;
-
-            if (dano < 0) {
-                dano = 0;
-            }
+        if (!combate.acabou()) {
+            esperarTurnoInimigo();
         }
-
-        vidaJogador -= dano;
-
-        if (vidaJogador < 0) {
-            vidaJogador = 0;
-        }
-
-        atualizarVidas();
-        verificarFim();
-    }
-
-    private void turnoGoblin() {
-        if (vidaGoblin <= 0 || vidaJogador <= 0) {
-            return;
-        }
-
-        aplicarVeneno();
-
-        if (vidaJogador <= 0) {
-            return;
-        }
-
-        if (turnosGoblinCongelado > 0) {
-            mostrarMensagem("Goblin está congelado!");
-            turnosGoblinCongelado--;
-            return;
-        }
-
-        int sorteio = random.nextInt(100) + 1;
-
-        if (sorteio <= 25) {
-            mostrarMensagem("Goblin usou Flecha!");
-            causarDanoNoJogador(4);
-
-        } else if (sorteio <= 45) {
-            mostrarMensagem("Goblin usou Cura!");
-
-            vidaGoblin += 5;
-
-            if (vidaGoblin > 25) {
-                vidaGoblin = 25;
-            }
-
-            atualizarVidas();
-
-        } else if (sorteio <= 65) {
-            mostrarMensagem("Goblin usou Escudo!");
-            escudoGoblin = 3;
-
-        } else if (sorteio <= 85) {
-            mostrarMensagem("Goblin usou Veneno!");
-            venenoJogador = 3;
-
-        } else {
-            mostrarMensagem("Goblin usou Ataque Forte!");
-            causarDanoNoJogador(7);
-        }
-
-        verificarFim();
-    }
-
-    private void aplicarVeneno() {
-        if (venenoJogador > 0) {
-            vidaJogador -= 2;
-            venenoJogador--;
-
-            mostrarMensagem("Veneno causou 2 de dano!");
-
-            if (vidaJogador < 0) {
-                vidaJogador = 0;
-            }
-
-            atualizarVidas();
-            verificarFim();
-        }
-    }
-
-    private void atualizarVidas() {
-        vidaJogadorLabel.setText("Jogador: " + vidaJogador + "/" + vidaMaximaJogador);
-        vidaGoblinLabel.setText("Goblin: " + vidaGoblin + "/25");
     }
 
     private void verificarFim() {
-        if (vidaJogador <= 0) {
+        if (combate.jogadorPerdeu()) {
             esconderCartas();
 
             goblinCombate.setVisible(false);
@@ -397,15 +326,15 @@ public class CombateController {
 
             dialogo.setText("Você perdeu!");
             dialogo.setVisible(true);
+            dialogo.toFront();
 
             bloquearCartas(true);
+
+            return;
         }
 
-        if (vidaGoblin <= 0) {
-            if (!recompensaEntregue && personagemAtual != null) {
-                personagemAtual.ganharPontoEvolucao();
-                recompensaEntregue = true;
-            }
+        if (combate.jogadorVenceu()) {
+            combate.entregarRecompensa();
 
             esconderCartas();
 
@@ -414,17 +343,60 @@ public class CombateController {
 
             dialogo.setText("Você venceu!");
             dialogo.setVisible(true);
+            dialogo.toFront();
 
-            premiosLabel.setText("+1 ponto de evolução");
+            premiosLabel.setText(
+                    "+1 ponto de evolução\n\n"
+                    + "Y para continuar e abrir/fechar menu"
+            );
+
             premiosLabel.setVisible(true);
+            premiosLabel.toFront();
+
+            esperandoY = true;
 
             bloquearCartas(true);
+            configurarTeclaY();
         }
     }
 
+    private void configurarTeclaY() {
+        Platform.runLater(() -> {
+            Scene scene = mapaCombate.getScene();
+
+            if (scene == null) {
+                return;
+            }
+
+            scene.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.Y && esperandoY) {
+                    esperandoY = false;
+
+                    try {
+                        SessaoJogo.setMapaAtual(proximoMapa);
+                        SessaoJogo.setPosicaoX(340);
+                        SessaoJogo.setPosicaoY(320);
+
+                        App.setRoot("game");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    event.consume();
+                }
+            });
+        });
+    }
+
     private Image carregarImagem(String nomeArquivo) {
-        return new Image(
-                getClass().getResourceAsStream("/assets/" + nomeArquivo)
-        );
+        var input = getClass().getResourceAsStream("/assets/" + nomeArquivo);
+
+        if (input == null) {
+            throw new RuntimeException(
+                    "Imagem não encontrada: /assets/" + nomeArquivo
+            );
+        }
+
+        return new Image(input);
     }
 }

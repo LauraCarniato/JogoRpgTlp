@@ -1,28 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox alignment="CENTER"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx/8.0.171"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.mycompany.jogorpgtlp.controller.TelaInicialController">
+<AnchorPane prefWidth="800"
+            prefHeight="600"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mycompany.jogorpgtlp.controller.TelaInicialController">
 
     <children>
-        <Label text="Jogo RPG TLP" />
 
-        <Button text="Iniciar"
-                onAction="#irParaMenuPersonagens" />
+        <ImageView fx:id="capa"
+                   fitWidth="800"
+                   fitHeight="600"
+                   preserveRatio="false"
+                   layoutX="0"
+                   layoutY="0" />
+
+        <Button text="JOGAR"
+                layoutX="310"
+                layoutY="360"
+                prefWidth="180"
+                prefHeight="50"
+                onAction="#irParaMenuPersonagens"
+                style="-fx-background-color: rgba(20,15,10,0.85);
+                       -fx-text-fill: #f5d27a;
+                       -fx-font-size: 24px;
+                       -fx-font-weight: bold;
+                       -fx-border-color: #c99a3a;
+                       -fx-border-width: 3;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;" />
+
+        <Button text="RANKING"
+                layoutX="310"
+                layoutY="420"
+                prefWidth="180"
+                prefHeight="45"
+                onAction="#mostrarRanking"
+                style="-fx-background-color: rgba(20,15,10,0.85);
+                       -fx-text-fill: #f5d27a;
+                       -fx-font-size: 20px;
+                       -fx-font-weight: bold;
+                       -fx-border-color: #c99a3a;
+                       -fx-border-width: 3;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;" />
+
+        <Button text="CRÉDITOS"
+                layoutX="310"
+                layoutY="475"
+                prefWidth="180"
+                prefHeight="45"
+                onAction="#mostrarCreditos"
+                style="-fx-background-color: rgba(20,15,10,0.85);
+                       -fx-text-fill: #f5d27a;
+                       -fx-font-size: 20px;
+                       -fx-font-weight: bold;
+                       -fx-border-color: #c99a3a;
+                       -fx-border-width: 3;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;" />
+
+        <Button text="ENCERRAR"
+                layoutX="310"
+                layoutY="530"
+                prefWidth="180"
+                prefHeight="45"
+                onAction="#encerrar"
+                style="-fx-background-color: rgba(20,15,10,0.85);
+                       -fx-text-fill: #f5d27a;
+                       -fx-font-size: 20px;
+                       -fx-font-weight: bold;
+                       -fx-border-color: #c99a3a;
+                       -fx-border-width: 3;
+                       -fx-background-radius: 8;
+                       -fx-border-radius: 8;" />
+
     </children>
 
-    <padding>
-        <Insets bottom="20.0"
-                left="20.0"
-                right="20.0"
-                top="20.0" />
-    </padding>
-
-</VBox>
+</AnchorPane>

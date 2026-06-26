@@ -3,6 +3,8 @@ package com.mycompany.jogorpgtlp.controller;
 import com.mycompany.jogorpgtlp.App;
 import com.mycompany.jogorpgtlp.model.GerenciadorPersonagens;
 import com.mycompany.jogorpgtlp.model.Personagem;
+import com.mycompany.jogorpgtlp.model.PersonagemDAO;
+import com.mycompany.jogorpgtlp.model.SessaoJogo;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -134,9 +136,27 @@ public class CriarPersonagemController {
 
         Personagem personagem = new Personagem(nome, classe, aparenciaSelecionada);
 
-        GerenciadorPersonagens.adicionarPersonagem(personagem);
+        try {
+            PersonagemDAO dao = new PersonagemDAO();
+            dao.salvar(personagem);
 
-        App.setRoot("menuPersonagens");
+            GerenciadorPersonagens.adicionarPersonagem(personagem);
+
+            SessaoJogo.setPersonagemAtual(personagem);
+            SessaoJogo.setMapaAtual("nivel1_sala1.png");
+            SessaoJogo.setInimigoAtual("goblin");
+
+            App.setRoot("menuPersonagens");
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao salvar personagem no banco.");
+            alert.showAndWait();
+
+            e.printStackTrace();
+        }
     }
 
     @FXML

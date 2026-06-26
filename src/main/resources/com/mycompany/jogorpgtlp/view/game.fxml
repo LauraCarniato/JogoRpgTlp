@@ -16,32 +16,35 @@
 
     <children>
 
-        <ImageView fx:id="mapaFundo"
-                   fitWidth="680"
-                   fitHeight="480"
-                   preserveRatio="false"
-                   layoutX="0"
-                   layoutY="0" />
+        <ImageView fx:id="mapaFundo" fitWidth="680" fitHeight="480" preserveRatio="false" layoutX="0" layoutY="0" />
 
-        <Rectangle fx:id="paredeCima" layoutX="0" layoutY="0" width="680" height="45" fill="green" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="paredeBaixo" layoutX="0" layoutY="395" width="680" height="40" fill="green" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="paredeEsquerda" layoutX="65" layoutY="0" width="35" height="480" fill="green" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="paredeDireita" layoutX="580" layoutY="0" width="35" height="480" fill="green" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeCima" layoutX="0" layoutY="0" width="680" height="45" fill="green" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeBaixo" layoutX="0" layoutY="395" width="680" height="40" fill="green" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeEsquerda" layoutX="65" layoutY="0" width="35" height="480" fill="green" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="paredeDireita" layoutX="580" layoutY="0" width="35" height="480" fill="green" opacity="0.0" mouseTransparent="true" />
 
-        <Rectangle fx:id="pedra1" layoutX="200" layoutY="150" width="65" height="40" fill="red" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="pedra2" layoutX="295" layoutY="213" width="55" height="35" fill="red" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="pedra3" layoutX="475" layoutY="340" width="30" height="25" fill="red" opacity="0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra1" layoutX="200" layoutY="150" width="65" height="40" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra2" layoutX="295" layoutY="213" width="55" height="35" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra3" layoutX="475" layoutY="340" width="30" height="25" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra4" layoutX="100" layoutY="100" width="40" height="40" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra5" layoutX="150" layoutY="150" width="40" height="40" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra6" layoutX="200" layoutY="200" width="40" height="40" fill="red" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="pedra7" layoutX="250" layoutY="250" width="40" height="40" fill="red" opacity="0.0" mouseTransparent="true" />
 
-        <Rectangle fx:id="bau1" layoutX="133" layoutY="100" width="37" height="33" fill="blue" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="bau2" layoutX="435" layoutY="275" width="40" height="30" fill="blue" opacity="0" mouseTransparent="true" />
-        <Rectangle fx:id="passagemPorta" layoutX="325" layoutY="40" width="35" height="15" fill="blue" opacity="0.3" mouseTransparent="true" />
+        <Rectangle fx:id="bau1" layoutX="133" layoutY="100" width="37" height="33" fill="blue" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="bau2" layoutX="435" layoutY="275" width="40" height="30" fill="blue" opacity="0.0" mouseTransparent="true" />
+        <Rectangle fx:id="bau3" layoutX="500" layoutY="300" width="40" height="30" fill="blue" opacity="0.0" mouseTransparent="true" />
 
-        <ImageView fx:id="player"
-                   fitWidth="80"
-                   fitHeight="80"
-                   preserveRatio="true"
-                   layoutX="360"
-                   layoutY="260" />
+        <Rectangle fx:id="passagemPorta"
+                   layoutX="325"
+                   layoutY="40"
+                   width="35"
+                   height="15"
+                   fill="lime"
+                   opacity="0.0"
+                   mouseTransparent="true" />
+
+        <ImageView fx:id="player" fitWidth="80" fitHeight="80" preserveRatio="true" layoutX="360" layoutY="260" />
 
         <Label fx:id="mensagemAcao"
                text="TAB — Abrir"
@@ -68,68 +71,20 @@
                            -fx-border-radius: 15;">
 
             <children>
+                <Label text="Evolução" layoutX="160" layoutY="20"
+                       style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" />
 
-                <Label text="Evolução"
-                       layoutX="160"
-                       layoutY="20"
-                       style="-fx-text-fill: white;
-                              -fx-font-size: 28px;
-                              -fx-font-weight: bold;" />
+                <Label fx:id="labelPontos" text="Pontos: 0" layoutX="160" layoutY="65"
+                       style="-fx-text-fill: gold; -fx-font-size: 20px; -fx-font-weight: bold;" />
 
-                <Label fx:id="labelPontos"
-                       text="Pontos: 0"
-                       layoutX="160"
-                       layoutY="65"
-                       style="-fx-text-fill: gold;
-                              -fx-font-size: 20px;
-                              -fx-font-weight: bold;" />
-
-                <Button fx:id="btnVida"
-                        layoutX="80"
-                        layoutY="120"
-                        prefWidth="280"
-                        text="Vida 0/10"
-                        onAction="#uparVida" />
-
-                <Button fx:id="btnEspada"
-                        layoutX="80"
-                        layoutY="165"
-                        prefWidth="280"
-                        text="Espada 0/10"
-                        onAction="#uparEspada" />
-
-                <Button fx:id="btnCura"
-                        layoutX="80"
-                        layoutY="210"
-                        prefWidth="280"
-                        text="Cura 0/10"
-                        onAction="#uparCura" />
-
-                <Button fx:id="btnEscudo"
-                        layoutX="80"
-                        layoutY="255"
-                        prefWidth="280"
-                        text="Escudo 0/10"
-                        onAction="#uparEscudo" />
-
-                <Button fx:id="btnDano"
-                        layoutX="80"
-                        layoutY="300"
-                        prefWidth="280"
-                        text="Dano 0/10"
-                        onAction="#uparDano" />
-
-                <Button fx:id="btnCongelamento"
-                        layoutX="80"
-                        layoutY="345"
-                        prefWidth="280"
-                        text="Congelamento 0/10"
-                        onAction="#uparCongelamento" />
-
+                <Button fx:id="btnVida" layoutX="80" layoutY="120" prefWidth="280" text="Vida 0/10" onAction="#uparVida" />
+                <Button fx:id="btnEspada" layoutX="80" layoutY="165" prefWidth="280" text="Espada 0/10" onAction="#uparEspada" />
+                <Button fx:id="btnCura" layoutX="80" layoutY="210" prefWidth="280" text="Cura 0/10" onAction="#uparCura" />
+                <Button fx:id="btnEscudo" layoutX="80" layoutY="255" prefWidth="280" text="Escudo 0/10" onAction="#uparEscudo" />
+                <Button fx:id="btnDano" layoutX="80" layoutY="300" prefWidth="280" text="Dano 0/10" onAction="#uparDano" />
+                <Button fx:id="btnCongelamento" layoutX="80" layoutY="345" prefWidth="280" text="Congelamento 0/10" onAction="#uparCongelamento" />
             </children>
-
         </AnchorPane>
 
     </children>
-
 </AnchorPane>

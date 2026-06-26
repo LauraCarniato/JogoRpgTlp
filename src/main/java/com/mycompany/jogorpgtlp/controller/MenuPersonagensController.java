@@ -1,10 +1,14 @@
 package com.mycompany.jogorpgtlp.controller;
 
 import com.mycompany.jogorpgtlp.App;
-import com.mycompany.jogorpgtlp.model.GerenciadorPersonagens;
 import com.mycompany.jogorpgtlp.model.Personagem;
+import com.mycompany.jogorpgtlp.model.PersonagemDAO;
+import com.mycompany.jogorpgtlp.model.ProgressoDAO;
 import com.mycompany.jogorpgtlp.model.SessaoJogo;
 import java.io.IOException;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -18,9 +22,17 @@ public class MenuPersonagensController {
     @FXML
     private ListView<Personagem> listaPersonagens;
 
+    private ObservableList<Personagem> personagens =
+            FXCollections.observableArrayList();
+
+    private PersonagemDAO personagemDAO = new PersonagemDAO();
+    private ProgressoDAO progressoDAO = new ProgressoDAO();
+
     @FXML
     private void initialize() {
-        listaPersonagens.setItems(GerenciadorPersonagens.getPersonagens());
+        carregarPersonagensBanco();
+
+        listaPersonagens.setItems(personagens);
 
         listaPersonagens.setStyle(
                 "-fx-control-inner-background: #A52A2A;" +
@@ -37,6 +49,28 @@ public class MenuPersonagensController {
             }
         });
 
+        configurarCelulas();
+    }
+
+    private void carregarPersonagensBanco() {
+        try {
+            ArrayList<Personagem> lista = personagemDAO.listarTodos();
+
+            personagens.clear();
+            personagens.addAll(lista);
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao carregar personagens do banco.");
+            alert.showAndWait();
+
+            e.printStackTrace();
+        }
+    }
+
+    private void configurarCelulas() {
         listaPersonagens.setCellFactory(param -> new ListCell<Personagem>() {
             @Override
             protected void updateItem(Personagem p, boolean empty) {
@@ -73,8 +107,19 @@ public class MenuPersonagensController {
 
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            GerenciadorPersonagens.removerPersonagem(p);
-                        }
+    try {
+        personagemDAO.excluir(p.getId());
+        personagens.remove(p);
+    } catch (Exception ex) {
+        Alert erro = new Alert(Alert.AlertType.ERROR);
+        erro.setTitle("Erro");
+        erro.setHeaderText(null);
+        erro.setContentText("Erro ao excluir personagem do banco.");
+        erro.showAndWait();
+
+        ex.printStackTrace();
+    }
+}
                     });
                 });
 
@@ -129,8 +174,22 @@ public class MenuPersonagensController {
             return;
         }
 
-        SessaoJogo.setPersonagemAtual(selecionado);
-        App.setRoot("game");
+        try {
+            SessaoJogo.setPersonagemAtual(selecionado);
+
+            progressoDAO.carregarProgresso(selecionado);
+
+            App.setRoot("game");
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Erro ao carregar progresso do personagem.");
+            alert.showAndWait();
+
+            e.printStackTrace();
+        }
     }
 
     @FXML
